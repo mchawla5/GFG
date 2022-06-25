@@ -6,18 +6,20 @@ The problem requires us to have a function to rotate an array 'arr' of size 'n' 
 Eg: arr = [1,2,3,4,5,6] if rotated by d=3, output = [4,5,6,1,2,3]
 
 SOLUTION:
-- Method 1
+- Method 1 (using a temp array)
     |_ Time Complexity = O(n)
     |_ Auxiliary Space = O(n)
-- Method 2
+- Method 2 (using a GCD value)
     |_ Time Complexity = O(n)
     |_ Auxiliary Space = O(1)
-- Method 3
+- Method 3 (using a reversal algorithm)
+    |_ Time Complexity = O(n)
+    |_ Auxiliary Space = O(1)
+- Method 4 (using a block swap algorithm)
     |_ Time Complexity = O(n)
     |_ Auxiliary Space = O(1)
 '''
 from sys import argv
-import time
 
 
 # Input method (asking user for inputs):
@@ -75,12 +77,38 @@ def reverseArray(arr, start, end):
 
 def rotateArrayM3(arr, elements_to_rotate):
     if elements_to_rotate == 0:
+        print(arr)
         return
     n = len(arr)
     d = elements_to_rotate % n
     reverseArray(arr, 0, d-1)
     reverseArray(arr, d, n-1)
     reverseArray(arr, 0, n-1)
+    print(arr)
+
+
+# Method 4 (block swap algorithm):
+def swap(arr, fi, si, d):
+    for i in range(d):
+        temp = arr[fi + i]
+        arr[fi + i] = arr[si + i]
+        arr[si + i] = temp
+
+def rotateArrayM4(arr, elements_to_rotate):
+    n = len(arr)
+    if (elements_to_rotate == 0 or elements_to_rotate == n):
+        print(arr)
+        return
+    i = elements_to_rotate
+    j = n - elements_to_rotate
+    while (i != j):
+        if (i < j):
+            swap(arr, elements_to_rotate-i, elements_to_rotate+j-i, i)
+            j -= i
+        else:
+            swap(arr, elements_to_rotate-i, elements_to_rotate, j)
+            i -= j
+    swap(arr, elements_to_rotate-i, elements_to_rotate, i)
     print(arr)
 
 
@@ -94,5 +122,7 @@ if __name__ == "__main__":
             rotateArrayM2(arr, elements_to_rotate)
         elif (argv[1] == ('m3' or 'M3')):
             rotateArrayM3(arr, elements_to_rotate)
+        elif (argv[1] == ('m4' or 'M4')):
+            rotateArrayM4(arr, elements_to_rotate)
     else:
         print("\nERROR: Please select an argument between 'm1/M1' or 'm2/M2' to run the code with the correspodning method!\n")
