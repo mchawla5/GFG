@@ -18,9 +18,6 @@ SOLUTION:
 '''
 
 # node class
-from typing_extensions import Self
-
-
 class Node:
     # initialise object
     def __init__(self, data):
