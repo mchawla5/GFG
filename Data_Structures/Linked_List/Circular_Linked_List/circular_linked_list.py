@@ -1,7 +1,7 @@
 '''
-CREATE A SINGLY LINKED LIST AND PERFORM VARIOUS OPERATIONS
+CREATE A CIRCULAR LINKED LIST AND PERFORM VARIOUS OPERATIONS
 
-The problem requires us to create a singly list holding data and perform operations like insertion, deletion and search.
+The problem requires us to create a circular list holding data and perform operations like insertion, deletion and search.
 
 SOLUTION:
 - Create a class for node
@@ -28,81 +28,68 @@ class Node:
 class LinkedList:
     # initialise object
     def __init__(self):
-        self.head = None
-
+        self.tail = None
+    
     # insert node at beginning
     def insertAtHead(self, new_data):
         new_node = Node(new_data)
-        new_node.next = self.head
-        self.head = new_node
+        new_node.next = self.tail.next
+        self.tail.next = new_node
     
     # insert a node in between
-    def insertBetween(self, prev_data, new_data):
-        temp = self.head
-        while(temp):
-            if(temp.data == prev_data):
-                new_node = Node(new_data)
-                new_node.next = temp.next
-                temp.next = new_node
-                return
-            else:
-                temp = temp.next
-    
+    def insertBetween(self, pos, new_data):
+        new_node = Node(new_data)
+        head = self.tail.next
+        index = 1
+        while(index != pos):
+            head = head.next
+            index +=1
+        new_node.next = head.next
+        head.next = new_node
+        
     # insert a node at the end
     def insertAtTail(self, new_data):
         new_node = Node(new_data)
-        if self.head is None:
-            self.head = new_node
-            return
-        tail = self.head
-        while(tail.next):
-            tail = tail.next
-        tail.next = new_node
-    
-    # delete a node
-    def delete(self, key):
-        temp = self.head
-        if(temp == None):
-            print("Nothing to delete\n")
-        elif(temp.data == key):
-                self.head = temp.next
-                temp = None
+        if(self.tail is None):
+            new_node.next = None
+            self.tail = new_node
+        elif(self.tail.next is None):
+            new_node.next = self.tail
+            self.tail.next = new_node
+            self.tail = new_node
         else:
-            while(temp is not None):
-                if(temp.data == key):
-                    break
-                prev = temp
-                temp = temp.next
-            prev.next = temp.next
-            temp = None
+            new_node.next = self.tail.next
+            self.tail.next = new_node
+            self.tail = new_node
     
     # print the list
     def printList(self):
-        temp = self.head
-        while(temp):
-            print(temp.data, end=" ")
-            temp = temp.next
+        head = self.tail.next
+        if(self.tail is None):
+            print("Empty list\n")
+        if(head is None):
+            print(self.tail.data, end=" ")
+        else:
+            while(head):
+                print(head.data, end=" ")
+                head = head.next
+                if(head == self.tail.next):
+                    break
         print("\n")
     
-    # get the length
+    # get length of list
     def getLength(self):
-        temp = self.head
-        n = 0
-        while(temp):
-            temp = temp.next
-            n+=1
-        return n
-    
-    # search element
-    def search(self, new_data):
-        temp = self.head
-        index = 0
-        while(temp):
-            if (temp.data == new_data):
-                return (index)
-            temp = temp.next
-            index +=1
-        return(-1)
+        if(self.tail is None):
+            return 0
+        if(self.tail.next is None):
+            return 1
+        head = self.tail.next
+        count = 0
+        while(head):
+            count +=1
+            head = head.next
+            if(head == self.tail.next):
+                return count
 
 
 # Input method (asking user for inputs):
@@ -115,7 +102,6 @@ def askInput():
         linked_list.insertAtTail(int(input("Enter the data value\n")))    
     return linked_list
 
-
 if __name__=='__main__':
     linked_list = askInput()
     linked_list.printList()
@@ -127,14 +113,14 @@ if __name__=='__main__':
             if(position == 1):
                 linked_list.insertAtHead(data)
             elif(position == 2):
-                prev = int(input("Enter the data after which you want to insert\n"))
-                linked_list.insertBetween(prev, data)
+                pos = int(input("Enter the place where you want to insert\n"))
+                linked_list.insertBetween(pos, data)
             elif(position == 3):
                 linked_list.insertAtTail(data)
             else:
                 print("no position selected to insert\n")
             linked_list.printList()
-        elif(option == 2):
+        '''elif(option == 2):
             data = int(input("Enter the data you want to delete\n"))
             linked_list.delete(data)
             linked_list.printList()
@@ -146,6 +132,6 @@ if __name__=='__main__':
             else:
                 print("Not found\n")
         else:
-            print("No option selected\n")
+            print("No option selected\n")'''
     else:
         print("Linked List not created")
