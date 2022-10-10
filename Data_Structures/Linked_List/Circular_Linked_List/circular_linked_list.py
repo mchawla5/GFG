@@ -62,6 +62,49 @@ class LinkedList:
             self.tail.next = new_node
             self.tail = new_node
     
+    # delete a node
+    def delete(self, key):
+        head = self.tail
+        if(head is None):
+            print("No element to delete")
+        elif(head.next is None):
+            if(head == key):
+                self.tail = None
+                head = None
+        elif(self.tail.data == key):
+            while(head):
+                if(head.next == self.tail):
+                    head.next = self.tail.next
+                    self.tail = None
+                    self.tail = head
+                    return
+                head = head.next
+        else:
+            while(head):
+                temp = head.next
+                if(temp != self.tail):
+                    if(temp.data == key):
+                        head.next = temp.next
+                        temp.next = None
+                        temp = None
+                        return
+                else:
+                    break
+                head = head.next
+        print("Element doesn't exist")
+    
+    # search an element
+    def search(self, key):
+        head = self.tail
+        index = 0
+        while(head):
+            if(head.next.data == key):
+                return index
+            index +=1
+            head = head.next
+            if(head == self.tail):
+                return -1
+    
     # print the list
     def printList(self):
         head = self.tail.next
@@ -120,7 +163,7 @@ if __name__=='__main__':
             else:
                 print("no position selected to insert\n")
             linked_list.printList()
-        '''elif(option == 2):
+        elif(option == 2):
             data = int(input("Enter the data you want to delete\n"))
             linked_list.delete(data)
             linked_list.printList()
@@ -132,6 +175,6 @@ if __name__=='__main__':
             else:
                 print("Not found\n")
         else:
-            print("No option selected\n")'''
+            print("No option selected\n")
     else:
         print("Linked List not created")
