@@ -1,7 +1,7 @@
 '''
 CREATE A BINARY TREE AND PERFORM VARIOUS OPERATIONS
 
-The problem requires us to create a binary tree holding data and perform operations like insertion, deletion, search, and traversal.
+The problem requires us to create a binary tree holding data and perform operations like insertion, deletion, and traversal.
 
 SOLUTION:
 - Create a class for node
