@@ -14,7 +14,7 @@ SOLUTION:
     |_ Space Complexity = O(n)  size of queue
 - Traversal:
     |_ Time Complexity = O(n)
-    |_ Space Complexity = O(1)
+    |_ Space Complexity = O(n)
 '''
 
 # node class
