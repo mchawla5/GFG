@@ -18,18 +18,19 @@ def search(arr, key, n):
             return index
     return -1
 
-def postOrder(inorder_arr, preorder_arr, n):
+def postOrderM1(inorder_arr, preorder_arr, n):
     root_index = search(inorder_arr, preorder_arr[0], n)
-
     if(root_index != 0):
-        postOrder(inorder_arr, preorder_arr[1:n], root_index)
+        postOrderM1(inorder_arr, preorder_arr[1:n], root_index)
     if(root_index != n-1):
-        postOrder(inorder_arr[root_index+1:n], preorder_arr[root_index+1:n], n-root_index-1)
+        postOrderM1(inorder_arr[root_index+1:n], preorder_arr[root_index+1:n], n-root_index-1)
     print(preorder_arr[0], end=" ")
 
 if __name__=='__main__':
     inorder_array = [4,2,5,1,3,6]
     preorder_array = [1,2,4,5,3,6]
     n = len(inorder_array)
-    print("Postorder traversal: ")
-    postOrder(inorder_array, preorder_array, n)
+    method = int(input("Please select a method you want to use: 1. Method-1     2. Method-2\n"))
+    if(method == 1):
+        print("Postorder traversal: ")
+        postOrderM1(inorder_array, preorder_array, n)
